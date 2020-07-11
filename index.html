@@ -8,16 +8,28 @@
 <body>
     
     <h1>Simulador de Cinemática</h1>
-    Deslocamento: <label id="distance"></label> metros<br>
-    Tempo: <label id="time"></label> segundos<br><br>
-    Velocidade : <input type="number" id="value-velocity">
-    <button id="btn-calc">Calcular</button> <br>
-    Status: <label id="status"></label>
+    <section id="infoSimulator">
+        Deslocamento: <label id="distance"></label> metros<br>
+        Tempo: <label id="time"></label> segundos<br><br>
+        Velocidade : <input type="number" id="value-velocity">
+        <button id="btn-calc">Calcular</button> <br>
+        Status: <label id="status"></label> 
+    </section>
 
-    <canvas id="simulator" width="400" height="400"></canvas>
+    <section id="infoTentatives">
+        Tentativas: <label id="tentatives"></label>
+    </section>
+
+    <canvas id="simulator" width="400" height="100"></canvas>
 
     <script type="text/javascript">
         
+        let numberTentatives;
+        let tentatives = document.getElementById("tentatives")
+        if(!tentatives.value){
+            numberTentatives = 0
+            tentatives.innerHTML = numberTentatives
+        }
 
         const round = (num, places) => {
             if (!("" + num).includes("e")) {
@@ -33,42 +45,42 @@
             }
         }
 
-        function reload(){
+        const reload = () => {
             window.location.reload()
         }
 
-        window.onload = function(){
+       
+        window.onload = function pageSimulator(){
 
-            let min = 1
-            let max = 100
-
-            randomDistance = Math.round(Math.random() * (max - min) + min)
-            randomTime = Math.round(Math.random() * (max - min) + min)
+            
+            randomDistance = Math.round(Math.random() * (1000 - 1) + 1)
+            randomTime = Math.round(Math.random() * (100 - 1) + 1)
 
             document.getElementById("distance").innerHTML = randomDistance
             document.getElementById("time").innerHTML = randomTime
 
-            document.querySelector("#btn-calc").addEventListener('click', function(){
-                let velocity = document.getElementById("value-velocity").value
-                let valueRealVelocity = round( randomDistance / randomTime , 2);
-
-                let diference = valueRealVelocity - parseFloat(velocity)
-
-                console.log(round(valueRealVelocity,2))
-                console.log(velocity)
-                console.log(round(diference, 2))
-
-                if (diference = 0.01){
-                    document.getElementById("status").innerHTML = "CORRETO"
-                } else {
-                    window.alert("ERRRROOOOOUUUUU \n Tente novamente")
-                }
-
-            })
-
-
-
         }
+
+
+        document.querySelector("#btn-calc").addEventListener('click', function(){
+            let valueRealVelocity = round( randomDistance / randomTime , 2);
+            let velocity = document.getElementById("value-velocity").value
+            let diference = valueRealVelocity - parseFloat(velocity)
+
+            console.log(round(valueRealVelocity,2))
+            console.log(parseFloat(velocity))
+            console.log(round(diference, 2))
+
+            if (diference < 0.0 || diference > 0.01){
+                window.alert("ERRRROOOOOUUUUU \nTente novamente")
+                numberTentatives += 1
+                tentatives.innerHTML = numberTentatives
+                pageSimulator()
+            } else {
+                document.getElementById("status").innerHTML = "CORRETO"
+            }
+
+        })
 
     </script>
 
