@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kinematics Simulator</title>
+</head>
+<body>
+    
+    <h1>Simulador de Cinemática</h1>
+    Deslocamento: <label id="distance"></label> metros<br>
+    Tempo: <label id="time"></label> segundos<br><br>
+    Velocidade : <input type="number" id="value-velocity">
+    <button id="btn-calc">Calcular</button> <br>
+    Status: <label id="status"></label>
+
+    <canvas id="simulator" width="400" height="400"></canvas>
+
+    <script type="text/javascript">
+        
+
+        const round = (num, places) => {
+            if (!("" + num).includes("e")) {
+                return +(Math.round(num + "e+" + places)  + "e-" + places);
+            } else {
+                let arr = ("" + num).split("e");
+                let sig = ""
+                if (+arr[1] + places > 0) {
+                    sig = "+";
+                }
+
+                return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + places)) + "e-" + places);
+            }
+        }
+
+        function reload(){
+            window.location.reload()
+        }
+
+        window.onload = function(){
+
+            let min = 1
+            let max = 100
+
+            randomDistance = Math.round(Math.random() * (max - min) + min)
+            randomTime = Math.round(Math.random() * (max - min) + min)
+
+            document.getElementById("distance").innerHTML = randomDistance
+            document.getElementById("time").innerHTML = randomTime
+
+            document.querySelector("#btn-calc").addEventListener('click', function(){
+                let velocity = document.getElementById("value-velocity").value
+                let valueRealVelocity = round( randomDistance / randomTime , 2);
+
+                let diference = valueRealVelocity - parseFloat(velocity)
+
+                console.log(round(valueRealVelocity,2))
+                console.log(velocity)
+                console.log(round(diference, 2))
+
+                if (diference == 0.01){
+                    document.getElementById("status").innerHTML = "CORRETO"
+                } else {
+                    window.alert("ERRRROOOOOUUUUU \n Tente novamente")
+                }
+
+                if (parseInt(velocity) === round(valueRealVelocity,2)){
+                    document.getElementById("status").innerHTML = "CORRETO"
+                } else {
+                    window.alert("ERRRROOOOOUUUUU \n Tente novamente")
+                    //reload()
+                }
+
+            })
+
+
+
+        }
+
+    </script>
+
+</body>
+</html>
