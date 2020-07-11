@@ -58,17 +58,10 @@
                 console.log(velocity)
                 console.log(round(diference, 2))
 
-                if (diference == 0.01){
+                if (diference = 0.01){
                     document.getElementById("status").innerHTML = "CORRETO"
                 } else {
                     window.alert("ERRRROOOOOUUUUU \n Tente novamente")
-                }
-
-                if (parseInt(velocity) === round(valueRealVelocity,2)){
-                    document.getElementById("status").innerHTML = "CORRETO"
-                } else {
-                    window.alert("ERRRROOOOOUUUUU \n Tente novamente")
-                    //reload()
                 }
 
             })
