@@ -1,11 +1,16 @@
 
 document.querySelector("#btn-select").addEventListener("click", () => {
-    let dropValue = document.querySelector("#exp-drop").value
-    console.log(
-        document.querySelector("#exp-drop").value
-    )    
+    let dropValue = document.querySelector("#exp-drop").value    
     if (dropValue == "opc") window.alert("Por favor, escolha uma opção!")
+    if (dropValue == "aceleration") aceleration()
 })
+
+function aceleration() {
+    // a = (vf - vi) / (tf - ti)
+    // a = ( 2*( (sf - si) - vi*t ) ) / (t ** 2) 
+    console.log("Estou dentro")
+    document.getElementById("div-aceleration").style.display = "flex"
+}
 
 /* let numberTentatives;
         let tentatives = document.getElementById("tentatives")
