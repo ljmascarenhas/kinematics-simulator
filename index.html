@@ -3,86 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kinematics Simulator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Cinemática Escalar</title>
 </head>
 <body>
-    
-    <h1>Simulador de Cinemática</h1>
-    <section id="infoSimulator">
-        Deslocamento: <label id="distance"></label> metros<br>
-        Tempo: <label id="time"></label> segundos<br><br>
-        Velocidade : <input type="number" id="value-velocity">
-        <button id="btn-calc">Calcular</button> <br>
-        Status: <label id="status"></label> 
-    </section>
+    <nav class="navbar navbar-dark bg-primary text-white">
+        <h1>Cinemática Escalar</h1>
+    </nav>
 
-    <section id="infoTentatives">
-        Tentativas: <label id="tentatives"></label>
-    </section>
-
-    <canvas id="simulator" width="400" height="100"></canvas>
-
-    <script type="text/javascript">
-        
-        let numberTentatives;
-        let tentatives = document.getElementById("tentatives")
-        if(!tentatives.value){
-            numberTentatives = 0
-            tentatives.innerHTML = numberTentatives
-        }
-
-        const round = (num, places) => {
-            if (!("" + num).includes("e")) {
-                return +(Math.round(num + "e+" + places)  + "e-" + places);
-            } else {
-                let arr = ("" + num).split("e");
-                let sig = ""
-                if (+arr[1] + places > 0) {
-                    sig = "+";
-                }
-
-                return +(Math.round(+arr[0] + "e" + sig + (+arr[1] + places)) + "e-" + places);
-            }
-        }
-
-        const reload = () => {
-            window.location.reload()
-        }
-
-       
-        window.onload = function pageSimulator(){
-
-            
-            randomDistance = Math.round(Math.random() * (1000 - 1) + 1)
-            randomTime = Math.round(Math.random() * (100 - 1) + 1)
-
-            document.getElementById("distance").innerHTML = randomDistance
-            document.getElementById("time").innerHTML = randomTime
-
-        }
+    <div class="card mx-auto mt-3" style="width: 22rem;">
+        <div class="card-body">
+          <h5 class="card-title p-2 mx-auto"> O que você quer determinar?</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Escolha uma das variáveis</h6>
+          <p class="card-text">
+              <form>
+                <select class="form-control" name="experiment" id="exp-drop">
+                    <option value="opc">Escolha uma opção ...</option>
+                    <option value="aceleration">Aceleração Média</option>
+                    <option value="initialPosition">Posição Inicial</option>
+                    <option value="finalPosition">Posição Final</option>
+                    <option value="initialVelocity">Velocidade Inicial</option>
+                    <option value="finalVelocity">Velocidade Final</option>
+                    <option value="time">Tempo</option>
+                </select>
+                <button type="button" class="btn btn-primary mt-3" id="btn-select">Selecionar</button>
+              </form>
+          </p>
+        </div>
+      </div>
 
 
-        document.querySelector("#btn-calc").addEventListener('click', function(){
-            let valueRealVelocity = round( randomDistance / randomTime , 2);
-            let velocity = document.getElementById("value-velocity").value
-            let diference = valueRealVelocity - parseFloat(velocity)
-
-            console.log(round(valueRealVelocity,2))
-            console.log(parseFloat(velocity))
-            console.log(round(diference, 2))
-
-            if (diference < 0.0 || diference > 0.01){
-                window.alert("ERRRROOOOOUUUUU \nTente novamente")
-                numberTentatives += 1
-                tentatives.innerHTML = numberTentatives
-                pageSimulator()
-            } else {
-                document.getElementById("status").innerHTML = "CORRETO"
-            }
-
-        })
-
-    </script>
+    <script src="main.js"></script>
 
 </body>
 </html>
